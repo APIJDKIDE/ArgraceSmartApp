@@ -7,12 +7,14 @@ from appium.webdriver.common.touch_action import TouchAction
 
 class Test_case:
 
+    global currentTime
+
     def setup(self):
 
         desired_cap = {
             'deviceName': 'huawei-cdy_tn90--V4DUT20508007711',
             'platformName': 'Android',
-            'platformVersion': '10',
+            'platformVersion': '6',
             'appPackage': 'ai.argrace.oem',
             'appActivity': 'ai.argrace.app.akeeta.main.Akeeta_SplashActivity',
             'noReset': True,
@@ -26,7 +28,7 @@ class Test_case:
     def test_justForReset(self):
         pass
 
-    #@pytest.mark.skip
+    @pytest.mark.skip
     def test_initAppInfo(self):
         # 初始化页面
         print("初始化页面")
@@ -52,10 +54,15 @@ class Test_case:
     def test_loginFunc(self):
         print("登录功能")
         # 登录
-        self.driver.find_element("id", "ai.argrace.oem:id/cetUserName").send_keys("13516610913")
-        self.driver.find_element("id", "ai.argrace.oem:id/petPassword").send_keys('Mse123')
-        self.driver.find_element("id", "ai.argrace.oem:id/cb_privacy").click()
-        self.driver.find_element("id", 'ai.argrace.oem:id/btnLogin').click()
+        self.driver.find_element("id", "ai.argrace.oem:id/cetUserName").send_keys("18898446160")
+        self.driver.find_element("id", "ai.argrace.oem:id/petPassword").send_keys('ld12121212')
+
+        #获取隐私权限
+        privacy_permission = self.driver.find_element("id", "ai.argrace.oem:id/cb_privacy")
+        if privacy_permission.is_displayed():
+            privacy_permission.click()
+
+        #self.driver.find_element("id", 'ai.argrace.oem:id/btnLogin').click()
 
         # 获取位置权限
         location_permission = self.driver.find_element("xpath",
@@ -75,10 +82,17 @@ class Test_case:
         self.driver.find_element("id","ai.argrace.oem:id/hello_account").click()
         self.driver.find_element("id", "ai.argrace.oem:id/btn_family_manage").click() #点击"家庭管理"
         self.driver.find_element("id", "ai.argrace.oem:id/menu_item_new_item").click() #点击新建
-        self.driver.find_element("id","ai.argrace.oem:id/cet_new_family_name").send_keys("新家庭001")
+        self.driver.find_element("id","ai.argrace.oem:id/cet_new_family_name").send_keys("新家庭aaaa")#("新家庭{}".format(time.localtime(time.time())))
+        self.driver.find_element("id","ai.argrace.oem:id/tv_family_area").click()
+        self.driver.find_element("id","ai.argrace.oem:id/tv_confirm").click()
+        self.driver.find_element("xpath", '//*[@text="保存"]').click()
 
+        toastText = self.driver.find_element("xpath","//*[contains(@text, '操作成功')]")
 
-        pass
+        if toastText.is_displayed():
+            assert 1==1
+        else:
+            assert 0
 
     def teardown(self):
         pass
