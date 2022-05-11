@@ -70,6 +70,16 @@ class Test_case:
 
         pass
 
+    def test_CreatNewHome(self):
+
+        self.driver.find_element("id","ai.argrace.oem:id/hello_account").click()
+        self.driver.find_element("id", "ai.argrace.oem:id/btn_family_manage").click() #点击"家庭管理"
+        self.driver.find_element("id", "ai.argrace.oem:id/menu_item_new_item").click() #点击新建
+        self.driver.find_element("id","ai.argrace.oem:id/cet_new_family_name").send_keys("新家庭001")
+
+
+        pass
+
     def teardown(self):
         pass
 
